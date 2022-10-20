@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {Text} from 'react-native';
 import useAuth from './src/hooks/useAuth';
+import ToDoList from './src/ToDoList';
 
 const App = () => {
   const {isAuth, onAuth} = useAuth();
@@ -11,7 +11,7 @@ const App = () => {
     }
   }, [isAuth, onAuth]);
 
-  return <Text>{isAuth ? 'logged in' : 'logged out'}</Text>;
+  return isAuth ? <ToDoList /> : null;
 };
 
 export default App;

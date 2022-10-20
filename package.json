@@ -13,8 +13,11 @@
     "expo": "^46.0.0",
     "expo-constants": "~13.2.4",
     "expo-local-authentication": "~12.3.0",
+    "expo-random": "~12.3.0",
+    "expo-secure-store": "~11.3.0",
     "react": "18.1.0",
-    "react-native": "0.70.3"
+    "react-native": "0.70.3",
+    "react-native-mmkv": "^2.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
