@@ -2,7 +2,7 @@ import { useReducer, useMemo, useCallback, useEffect } from 'react'
 import { getAllObjectsByPrefix, deleteItem, setObject } from "../state/secureStorage";
 
 export type ToDoAction = {
-  type: 'LOAD' | 'ADD' | 'DELETE' | 'EDIT' | 'CHECK';
+  type: 'LOAD' | 'UPDATE' | 'DELETE' | 'CHECK';
   payload: any;
 };
 
@@ -18,10 +18,10 @@ const toDoReducer = (state: ToDoState, action: ToDoAction) => {
         todos: [...action.payload]
       }
     } 
-    case 'ADD': {
+    case 'UPDATE': {
       return {
         ...state,
-        todos: [...state.todos, action.payload],
+        todos: [...state.todos.filter(todo => todo.id !== action.payload.id), action.payload],
       };
     }
     case 'DELETE': {
@@ -29,10 +29,6 @@ const toDoReducer = (state: ToDoState, action: ToDoAction) => {
         ...state,
         todos: state.todos.filter(todo => todo.id !== action.payload.id),
       };
-    }
-    case 'EDIT': {
-      // implement editing
-      return state
     }
     case 'CHECK': {
       return {
@@ -50,26 +46,27 @@ const toDoReducer = (state: ToDoState, action: ToDoAction) => {
   }
 };
 
-const makeToDoKey = (id:string | number) => `todo.${id}`
+const TODO_PREFIX = 'todo.' 
+const makeToDoKey = (id:string | number) => `${TODO_PREFIX}${id}`
 
 const useToDoState = () => {
   const [toDoState, dispatch] = useReducer(toDoReducer, initialState);
 
   useEffect(() => {
     const loadToDos = async () => {
-        const todos = await getAllObjectsByPrefix('todo.')
+        const todos = await getAllObjectsByPrefix(TODO_PREFIX)
         const mocks = [
             { id: 1, text: 'todo 1', checked: false }
         ]
-        dispatch({ type: 'LOAD', payload: [...mocks, ...todos] })
+        dispatch({ type: 'LOAD', payload: [...todos] })
     }
     loadToDos()
   }, [])
 
-  const addToDo = useCallback(async (todo: ToDo) => {
+  const updateToDo = useCallback(async (todo: ToDo) => {
     const key = makeToDoKey(todo.id)
     await setObject(key, todo)
-    dispatch({ type: 'ADD', payload: todo })
+    dispatch({ type: 'UPDATE', payload: todo })
   }, [])
 
   const deleteToDo = useCallback(async (todo: ToDo) => {
@@ -87,7 +84,7 @@ const useToDoState = () => {
 
   return useMemo(() => ({
     toDoState,
-    addToDo,
+    updateToDo,
     deleteToDo,
     checkToDo
   }), [toDoState])
