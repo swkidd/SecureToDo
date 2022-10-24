@@ -1,6 +1,7 @@
 import { useReducer, useMemo, useCallback, useEffect } from 'react'
 import { getAllObjectsByPrefix, deleteItem, setObject } from "../state/secureStorage";
 
+
 export type ToDoAction = {
   type: 'LOAD' | 'UPDATE' | 'DELETE' | 'CHECK';
   payload: any;
@@ -10,6 +11,11 @@ export type ToDo = {id: number; text: string; checked: boolean};
 export type ToDoState = {todos: ToDo[]};
 
 export const initialState: ToDoState = { todos: [] }
+export const defaultToDo = {
+  id: -1,
+  text: '',
+  checked: false,
+}
 
 const toDoReducer = (state: ToDoState, action: ToDoAction) => {
   switch (action.type) {

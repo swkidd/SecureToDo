@@ -17,7 +17,7 @@ interface ToDoItemType {
   todo: ToDo;
   editing: boolean;
   onUpdate: (todo: ToDo) => Promise<void> | void;
-  setEdit: (todo: ToDo) => void;
+  setEdit: (isEdit: boolean) => void;
   onDelete: (todo: ToDo) => Promise<void> | void;
   onCheck: (todo: ToDo) => Promise<void> | void;
 }
@@ -34,7 +34,7 @@ const TextOrInput = ({
   const inputRef = useRef<TextInput>(null);
 
   // save icon slide in animation
-  let slideValue = useRef(new Animated.Value(0)).current;
+  let slideValue = useRef(new Animated.Value(1)).current;
   const slideIn = Animated.spring(slideValue, {
     toValue: 0,
     useNativeDriver: false,
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 15,
+    marginVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -144,6 +145,7 @@ const styles = StyleSheet.create({
     margin: 0,
     fontSize: 16,
     flex: 1,
+    height: 24,
   },
   marginRight10: {
     marginRight: 10,
