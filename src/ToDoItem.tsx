@@ -28,6 +28,7 @@ const TextOrInput = ({
   value,
   setEdit,
   onUpdate,
+  onDelete,
   ...props
 }) => {
   const [text, setText] = useState<string>(value ?? '');
@@ -47,9 +48,14 @@ const TextOrInput = ({
 
   if (!editing) {
     return (
-      <Text onPress={() => setEdit(true)} {...props}>
-        {children}
-      </Text>
+      <View style={styles.inputRow}>
+        <Text onPress={() => setEdit(true)} {...props}>
+          {children}
+        </Text>
+        <TouchableOpacity onPress={onDelete}>
+          <FontAwesome5 name="times" size={16} />
+        </TouchableOpacity>
+      </View>
     );
   }
 
@@ -92,6 +98,7 @@ const ToDoItem = ({
   todo,
   editing,
   onUpdate,
+  onDelete,
   setEdit,
   onCheck,
 }: ToDoItemType) => {
@@ -118,6 +125,7 @@ const ToDoItem = ({
         editing={editing}
         setEdit={setEdit}
         onUpdate={(text: string) => onUpdate({...todo, text})}
+        onDelete={() => onDelete(todo)}
         style={styles.cardContent}
       >
         {todo.text?.length ? todo.text : 'Nothing to do...'}
