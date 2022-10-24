@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useRef} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -12,6 +12,7 @@ import ToDoItem from './ToDoItem';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 import type {ToDo} from './hooks/useToDoState';
+import colors from './colors';
 
 const ToDoList = () => {
   const {toDoState, updateToDo, checkToDo, deleteToDo} = useToDoState();
@@ -41,7 +42,7 @@ const ToDoList = () => {
   );
 
   return (
-    <KeyboardAvoidingView style={[styles.margin10, styles.flex1]}>
+    <KeyboardAvoidingView style={styles.container}>
       <FlatList
         style={styles.flex1}
         data={toDoState.todos
@@ -59,7 +60,7 @@ const ToDoList = () => {
           onChangeText={text => setNewToDo(c => ({...c, text}))}
         />
         <TouchableOpacity onPress={() => createNewToDo()}>
-          <FontAwesome5 name="plus" size={36} />
+          <FontAwesome5 name="plus" size={36} color={colors.blizardBlue} />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -67,20 +68,22 @@ const ToDoList = () => {
 };
 
 const styles = StyleSheet.create({
-  margin10: {
-    margin: 10,
-  },
-  flex1: {
+  container: {
     flex: 1,
+    backgroundColor: colors.blizardBlue,
   },
-  inputContainer: {flexDirection: 'row', alignItems: 'center', padding: 5},
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 5,
+    backgroundColor: colors.raisinBlack,
+  },
   input: {
+    backgroundColor: colors.white,
     flex: 1,
-    borderWidth: 1,
     margin: 5,
-    marginRight: 10,
     paddingVertical: 5,
-    borderRadius: 5,
+    paddingHorizontal: 10,
   },
 });
 

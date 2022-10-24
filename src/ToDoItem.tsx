@@ -11,6 +11,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 import type {ViewProps} from 'react-native';
 import type {ToDo} from './hooks/useToDoState';
+import colors from './colors';
 
 type PressableViewProps = ViewProps & {onPress?: () => void};
 interface ToDoItemType {
@@ -53,7 +54,7 @@ const TextOrInput = ({
           {children}
         </Text>
         <TouchableOpacity onPress={onDelete}>
-          <FontAwesome5 name="times" size={16} />
+          <FontAwesome5 name="times" size={16} color={colors.blizardBlue} />
         </TouchableOpacity>
       </View>
     );
@@ -87,7 +88,7 @@ const TextOrInput = ({
         }}
       >
         <TouchableOpacity onPress={() => inputRef.current?.blur?.()}>
-          <FontAwesome5 name="save" size={24} />
+          <FontAwesome5 name="save" size={24} color={colors.blizardBlue} />
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -108,7 +109,7 @@ const ToDoItem = ({
         <FontAwesome5
           name={todo.checked ? 'check-circle' : 'circle'}
           size={24}
-          color={todo.checked ? 'green' : 'black'}
+          color={todo.checked ? colors.raisinBlack : colors.blizardBlue}
           {...props}
         />
       );
@@ -141,12 +142,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    borderWidth: 1,
-    borderRadius: 5,
     padding: 15,
     marginVertical: 5,
+    marginHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: colors.white,
+    backgroundColor: colors.white,
   },
   cardContent: {
     padding: 0,
