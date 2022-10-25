@@ -57,11 +57,15 @@ export async function getAllObjectsByPrefix(prefix: string): Promise<object[]> {
   const store = await getStorage()
   const keys = store.getAllKeys()
   const values: object[] = []
+
+  // lookup all keys that start with prefix and add them to values as an object
   for (let key of keys) {
     if (key.startsWith(prefix)) {
         const value = store.getString(key)
         if (value) {
-          values.push(JSON.parse(value))
+          try {
+            values.push(JSON.parse(value))
+          } catch {}
         }
     }
   }

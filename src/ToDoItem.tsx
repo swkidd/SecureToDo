@@ -1,13 +1,7 @@
-import React, {useCallback, useState, useRef} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Animated,
-} from 'react-native';
+import React, {useCallback} from 'react';
+import {StyleSheet, View} from 'react-native';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import TextOrInput from './TextOrInput';
 
 import type {ViewProps} from 'react-native';
 import type {ToDo} from './hooks/useToDoState';
@@ -22,78 +16,6 @@ interface ToDoItemType {
   onDelete: (todo: ToDo) => Promise<void> | void;
   onCheck: (todo: ToDo) => Promise<void> | void;
 }
-
-const TextOrInput = ({
-  children,
-  editing,
-  value,
-  setEdit,
-  onUpdate,
-  onDelete,
-  ...props
-}) => {
-  const [text, setText] = useState<string>(value ?? '');
-  const inputRef = useRef<TextInput>(null);
-
-  // save icon slide in animation
-  let slideValue = useRef(new Animated.Value(1)).current;
-  const slideIn = Animated.spring(slideValue, {
-    toValue: 0,
-    useNativeDriver: false,
-  });
-  const slideOut = Animated.timing(slideValue, {
-    toValue: 1,
-    duration: 200,
-    useNativeDriver: false,
-  });
-
-  if (!editing) {
-    return (
-      <View style={styles.inputRow}>
-        <Text onPress={() => setEdit(true)} {...props}>
-          {children}
-        </Text>
-        <TouchableOpacity onPress={onDelete}>
-          <FontAwesome5 name="times" size={16} color={colors.blizardBlue} />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.inputRow}>
-      <TextInput
-        ref={inputRef}
-        value={text}
-        onChangeText={setText}
-        onFocus={() => slideIn.start()}
-        onBlur={() => {
-          onUpdate(text);
-          slideOut.start(() => setEdit(false));
-        }}
-        autoFocus
-        multiline
-        {...props}
-      />
-      <Animated.View
-        style={{
-          transform: [
-            {
-              translateX: slideValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 50],
-              }),
-            },
-          ],
-        }}
-      >
-        <TouchableOpacity onPress={() => inputRef.current?.blur?.()}>
-          <FontAwesome5 name="save" size={24} color={colors.blizardBlue} />
-        </TouchableOpacity>
-      </Animated.View>
-    </View>
-  );
-};
 
 const ToDoItem = ({
   todo,
@@ -125,7 +47,7 @@ const ToDoItem = ({
         value={todo.text}
         editing={editing}
         setEdit={setEdit}
-        onUpdate={(text: string) => onUpdate({...todo, text})}
+        onUpdateText={(text: string) => onUpdate({...todo, text})}
         onDelete={() => onDelete(todo)}
         style={styles.cardContent}
       >
@@ -136,11 +58,6 @@ const ToDoItem = ({
 };
 
 const styles = StyleSheet.create({
-  inputRow: {
-    flexDirection: 'row',
-    flex: 1,
-    alignItems: 'center',
-  },
   card: {
     padding: 15,
     marginVertical: 5,
