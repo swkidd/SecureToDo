@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     margin: 0,
     fontSize: 16,
     flex: 1,
-    height: 24,
   },
   marginRight10: {
     marginRight: 10,

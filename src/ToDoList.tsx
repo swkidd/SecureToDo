@@ -76,7 +76,7 @@ const ToDoList = () => {
       <FlatList
         data={
           toDoState.todos
-            .sort((a, b) => a.id - b.id)
+            .sort((a, b) => a.id.localeCompare(b.id))
             .filter(
               t => !editing || t.id === editing,
             ) /* only show the todo being editied */
