@@ -22,7 +22,7 @@ const useAuth = (): Auth => {
           text: 'Open Settings',
           onPress: () => {
             Platform.OS === 'ios'
-              ? /* configure for ios */ '' // Linking.openURL('App-Prefs:<settings>')
+              ? Linking.openURL('App-Prefs:root=TOUCHID_PASSCODE')
               : Linking.sendIntent('android.settings.SECURITY_SETTINGS');
           },
         },

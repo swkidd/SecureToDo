@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Text,
+  SafeAreaView,
 } from 'react-native';
 import useToDoState, {defaultToDo} from './hooks/useToDoState';
 import ToDoItem from './ToDoItem';
@@ -64,7 +65,7 @@ const ToDoList = () => {
   );
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <DateHeader
         open={open}
         setOpen={setOpen}
@@ -99,7 +100,7 @@ const ToDoList = () => {
           <FontAwesome5 name="plus" size={36} color={colors.blizardBlue} />
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

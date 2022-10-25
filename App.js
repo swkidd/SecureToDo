@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Button, SafeAreaView} from 'react-native';
 import colors from './src/colors';
 import useAuth from './src/hooks/useAuth';
 import ToDoList from './src/ToDoList';
