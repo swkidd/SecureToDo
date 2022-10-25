@@ -1,6 +1,6 @@
 # SecureToDo
 
-A Secure React Native To Do application featuring date based To Do's and local authentication
+A Secure React Native To Do application featuring date based To Do and local authentication
 
 This application uses expo-local-authentication to authenticate users  
 All data is encrypted and stored locally using react-native-mmkv and expo-secure-store  
